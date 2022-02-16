@@ -33,7 +33,7 @@ class Date:
         try:
             ddmmyy = str_date.split('-')
             int_date = [int(el) for el in ddmmyy]
-        except:
+        except ValueError:
             return []
         else:
             return int_date
@@ -47,7 +47,7 @@ class Date:
         """
         ddmmyy = Date.retrieve_date(str_date)
         # если список ddmmyy не содержит три элемента, то False
-        if len(ddmmyy) is not 3:
+        if len(ddmmyy) != 3:
             return False
         # словарь количества дней в месяце
         mdays = {1: 31, 2: 28, 3: 31, 4: 30, 5: 31, 6: 30, 7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31}
@@ -56,16 +56,14 @@ class Date:
             if not ddmmyy[2] % 4:
                 mdays[2] = 29
             return (ddmmyy[0] in range(1, mdays[ddmmyy[1]] + 1)) and (ddmmyy[1] in range(1, 13))
-        except:
+        except KeyError:
             return False
 
 
 print(Date.validate_date('03-12-15'))
-print(Date.validate_date('29-02-1980'))
+print(Date.validate_date('29-02-1981'))
 
 some_date = Date('01-03-1970')
 print(some_date.day, some_date.month, some_date.year)
 another_date = Date('29-02-1970')
 print(another_date.day, another_date.month, another_date.year)
-
-
